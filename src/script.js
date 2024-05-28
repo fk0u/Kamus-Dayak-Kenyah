@@ -87,7 +87,7 @@ function translateText(inputText, data, fromLang, toLang) {
       translation += translatedPhrase + " ";
     } else {
       let translatedWord = translateWord(words[i], data, fromLang, toLang);
-    //   translation += translatedWord ? translatedWord + " " : words[i] + " ";
+      //   translation += translatedWord ? translatedWord + " " : words[i] + " ";
       if (translatedWord != null) {
         translation += " " + translatedWord;
       } else {
@@ -102,20 +102,24 @@ function translateText(inputText, data, fromLang, toLang) {
 }
 
 function translatePhrase(phrase, data, fromLang, toLang) {
-  const equalsRegex = new RegExp(`^${phrase}$`, "i");
-  const closestRegex = new RegExp(`${phrase}`, "i");
+  const phraseRegex = new RegExp(`^${phrase}`, "i");
+  const phraseRegex2 = new RegExp(`^${phrase}$`, "i");
+  let result = null;
 
   for (let category in data) {
+    if (result != null) {
+      return result;
+    }
     if (fromLang === "id") {
       for (let key in data[category]) {
-        if (equalsRegex.test(key)) {
-          return data[category][key];
+        if (phraseRegex.test(key)) {
+          result = data[category][key];
         }
       }
     } else {
       for (let key in data[category]) {
-        if (equalsRegex.test(data[category][key])) {
-          return key;
+        if (phraseRegex2.test(data[category][key])) {
+          result = key;
         }
       }
     }
@@ -134,11 +138,9 @@ function translateWord(word, data, fromLang, toLang) {
       if (result) {
         return result;
       }
-      if (fromLang === "id") {
-        for (let key in data[category]) {
-          if (key == wordRegex) {
-            result = data[category][key];
-          }
+      for (let key in data[category]) {
+        if (key == wordRegex) {
+          result = data[category][key];
         }
       }
     }
@@ -148,11 +150,9 @@ function translateWord(word, data, fromLang, toLang) {
         if (result) {
           return result;
         }
-        if (fromLang === "id") {
-          for (let key in data[category]) {
-            if (key.startsWith(wordRegex)) {
-              result = data[category][key];
-            }
+        for (let key in data[category]) {
+          if (key.startsWith(wordRegex)) {
+            result = data[category][key];
           }
         }
       }
@@ -162,18 +162,16 @@ function translateWord(word, data, fromLang, toLang) {
       if (result) {
         return result;
       }
-      if (fromLang !== "id") {
-        for (let key in data[category]) {
-          if (typeof data[category][key] == "object") {
-            for (let item in data[category][key]) {
-              if (data[category][key][item].startsWith(wordRegex)) {
-                result = key;
-              }
-            }
-          } else {
-            if (data[category][key].toLowerCase() == wordRegex) {
+      for (let key in data[category]) {
+        if (typeof data[category][key] == "object") {
+          for (let item in data[category][key]) {
+            if (data[category][key][item].startsWith(wordRegex)) {
               result = key;
             }
+          }
+        } else {
+          if (data[category][key].toLowerCase() == wordRegex) {
+            result = key;
           }
         }
       }
@@ -184,20 +182,18 @@ function translateWord(word, data, fromLang, toLang) {
         if (result) {
           return result;
         }
-        if (fromLang !== "id") {
-          for (let key in data[category]) {
-            if (typeof data[category][key] == "object") {
-              for (let item in data[category][key]) {
-                if (
-                  data[category][key][item].toLowerCase().startsWith(wordRegex)
-                ) {
-                  result = key;
-                }
-              }
-            } else {
-              if (data[category][key].toLowerCase().startsWith(wordRegex)) {
+        for (let key in data[category]) {
+          if (typeof data[category][key] == "object") {
+            for (let item in data[category][key]) {
+              if (
+                data[category][key][item].toLowerCase().startsWith(wordRegex)
+              ) {
                 result = key;
               }
+            }
+          } else {
+            if (data[category][key].toLowerCase().startsWith(wordRegex)) {
+              result = key;
             }
           }
         }
