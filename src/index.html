@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kamus Bahasa Dayak Kenyah</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <div class="navbar">
+        <a href="#" class="logo">Kamus Dayak Kenyah</a>
+        <ul class="menu">
+          <li><a href="index.html">Beranda</a></li>
+          <li><a href="kamuskosakata.html">Kamus Kosakata</a></li>
+          <li><a href="#">Tentang</a></li>
+        </ul>
+        <button id="menuBtn" class="menu-btn">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+    <div id="mobileMenu" class="mobile-menu">
+      <ul>
+        <li><a href="index.html">Beranda</a></li>
+        <li><a href="kamuskosakata.html">Kamus Kosakata</a></li>
+        <li><a href="#">Tentang</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container mt-10">
+    <h1>Kamus Bahasa Dayak Kenyah</h1>
+
+    <div class="mb-4">
+      <label for="direction">Pilih Arah Penerjemahan:</label>
+      <select id="direction">
+        <option value="id-to-dk">Indonesia ke Dayak Kenyah</option>
+        <option value="dk-to-id">Dayak Kenyah ke Indonesia</option>
+      </select>
+    </div>
+    <div class="mb-4">
+      <label for="inputText">Masukkan Kalimat atau Kata:</label>
+      <textarea id="inputText" rows="4"></textarea>
+    </div>
+    <button id="translateBtn">Terjemahkan</button>
+
+    <div class="mt-5">
+      <h2>Hasil Terjemahan:</h2>
+      <p id="result"></p>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuBtn = document.getElementById('menuBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+    
+      menuBtn.addEventListener('click', function() {
+        menuBtn.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+      });
+    });    
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>

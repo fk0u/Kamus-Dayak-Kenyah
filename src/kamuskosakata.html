@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kamus Kosakata</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ... (kode CSS sebelumnya) ... */
+
+    .pdf-container {
+      position: relative;
+      width: 100%;
+      height: calc(100vh - 60px);
+      overflow: auto;
+    }
+
+    .pdf-container embed {
+      width: 100%;
+      height: 100%;
+    }
+
+    @media screen and (max-width: 768px) {
+      .menu {
+        display: none;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+
+      .pdf-container {
+        height: calc(100vh - 120px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <div class="navbar">
+        <a href="#" class="logo">Kamus Dayak Kenyah</a>
+        <ul class="menu">
+          <li><a href="index.html">Beranda</a></li>
+          <li><a href="/src/kamuskosakata.html">Kamus Kosakata</a></li>
+          <li><a href="#">Tentang</a></li>
+        </ul>
+        <button id="menuBtn" class="menu-btn">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+    <div id="mobileMenu" class="mobile-menu">
+      <ul>
+        <li><a href="index.html">Beranda</a></li>
+        <li><a href="kamuskosakata.html">Kamus Kosakata</a></li>
+        <li><a href="#">Tentang</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="pdf-container">
+    <embed src="Kamus Kosakata - Dayak Kenyah.pdf" type="application/pdf" width="100%" height="100%">
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+      
+        menuBtn.addEventListener('click', function() {
+          menuBtn.classList.toggle('active');
+          mobileMenu.classList.toggle('active');
+        });
+      });      
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
