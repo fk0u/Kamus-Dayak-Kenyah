@@ -52,26 +52,71 @@ function preprocessText(text) {
 
 function translateText(inputText, data, fromLang, toLang) {
     const words = inputText.split(' ');
-    let translation = words.map(word => translateWord(word.toLowerCase(), data, fromLang, toLang)).join(' ');
-    return translation.includes('[undefined]') ? '' : translation;
+    let translation = '';
+
+    for (let i = 0; i < words.length; i++) {
+        let translatedPhrase = '';
+        let phrase = words[i];
+
+        // Check for phrases with multiple words
+        for (let j = i + 1; j < words.length; j++) {
+            phrase += ' ' + words[j];
+            if (translatePhrase(phrase, data, fromLang, toLang)) {
+                translatedPhrase = translatePhrase(phrase, data, fromLang, toLang);
+                i = j;
+                break;
+            }
+        }
+
+        if (translatedPhrase) {
+            translation += translatedPhrase + ' ';
+        } else {
+            let translatedWord = translateWord(words[i], data, fromLang, toLang);
+            translation += translatedWord ? translatedWord + ' ' : words[i] + ' ';
+        }
+    }
+
+    return translation.trim();
 }
 
-function translateWord(word, data, fromLang, toLang) {
-    // Handle cases where word may or may not have punctuation
-    const normalizedWord = word.replace(/'/g, '').replace(/,/g, '').replace(/"/g, '');
+function translatePhrase(phrase, data, fromLang, toLang) {
+    const phraseRegex = new RegExp(`^${phrase}$`, 'i');
 
     for (let category in data) {
         if (fromLang === 'id') {
-            if (data[category][normalizedWord]) {
-                return data[category][normalizedWord];
+            for (let key in data[category]) {
+                if (phraseRegex.test(key)) {
+                    return data[category][key];
+                }
             }
         } else {
             for (let key in data[category]) {
-                if (data[category][key].toLowerCase().replace(/'/g, '').replace(/,/g, '').replace(/"/g, '') === normalizedWord) {
+                if (phraseRegex.test(data[category][key])) {
                     return key;
                 }
             }
         }
     }
-    return '[undefined]';  // return a marker if not found
+    return null;
+}
+
+function translateWord(word, data, fromLang, toLang) {
+    const wordRegex = new RegExp(`^${word}$`, 'i');
+
+    for (let category in data) {
+        if (fromLang === 'id') {
+            for (let key in data[category]) {
+                if (wordRegex.test(key)) {
+                    return data[category][key];
+                }
+            }
+        } else {
+            for (let key in data[category]) {
+                if (wordRegex.test(data[category][key])) {
+                    return key;
+                }
+            }
+        }
+    }
+    return null;
 }
