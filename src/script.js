@@ -1,19 +1,16 @@
-
 document.getElementById('translateBtn').addEventListener('click', async function() {
     const direction = document.getElementById('direction').value;
     let inputText = document.getElementById('inputText').value.trim();
     const resultElement = document.getElementById('result');
 
     if (!inputText) {
-        resultElement.textContent = 'Masukkan teks untuk diterjemahkan.';
+        alert('Masukkan teks untuk diterjemahkan.');
         return;
     }
 
-    // Clean and preprocess the input text
     inputText = preprocessText(inputText);
 
     try {
-        // Fetch data from data.json
         const response = await fetch('data.json');
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -28,12 +25,7 @@ document.getElementById('translateBtn').addEventListener('click', async function
             translation = translateText(inputText, data, 'dk', 'id');
         }
 
-        if (!translation) {
-            alert("Data Tidak di Temukan, Silahkan cari manual di Halaman Kamus Kosakata");
-            resultElement.textContent = '';
-        } else {
-            resultElement.textContent = translation;
-        }
+        resultElement.innerHTML = translation;
     } catch (error) {
         resultElement.textContent = 'Terjadi kesalahan saat mengambil data.';
         console.error('Fetch error: ', error);
@@ -41,12 +33,10 @@ document.getElementById('translateBtn').addEventListener('click', async function
 });
 
 function preprocessText(text) {
-    // Remove unnecessary spaces and normalize punctuation
-    text = text.replace(/\s+/g, ' ').trim();  // Remove extra spaces
-    text = text.replace(/ ,/g, ',');  // Fix spaces before commas
-    text = text.replace(/ \./g, '.');  // Fix spaces before periods
-    text = text.replace(/ \?/g, '?');  // Fix spaces before question marks
-    text = text.replace(/ \!/g, '!');  // Fix spaces before exclamation marks
+    text = text.toLowerCase();
+    text = text.replace(/\s+/g, ' ').trim();
+    text = text.replace(/^[.,!?]\s*/g, '').replace(/\s*[.,!?]$/g, '');
+    text = text.replace(/ ([,.])/g, '$1');
     return text;
 }
 
@@ -58,13 +48,12 @@ function translateText(inputText, data, fromLang, toLang) {
         let translatedPhrase = '';
         let phrase = words[i];
 
-        // Check for phrases with multiple words
-        for (let j = i + 1; j < words.length; j++) {
+        for (let j = i + 1; j <= Math.min(words.length, i + 5); j++) {
             phrase += ' ' + words[j];
-            if (translatePhrase(phrase, data, fromLang, toLang)) {
-                translatedPhrase = translatePhrase(phrase, data, fromLang, toLang);
+            let tempTranslation = translatePhrase(phrase.trim(), data, fromLang, toLang);
+            if (tempTranslation) {
+                translatedPhrase = tempTranslation;
                 i = j;
-                break;
             }
         }
 
@@ -72,7 +61,7 @@ function translateText(inputText, data, fromLang, toLang) {
             translation += translatedPhrase + ' ';
         } else {
             let translatedWord = translateWord(words[i], data, fromLang, toLang);
-            translation += translatedWord ? translatedWord + ' ' : words[i] + ' ';
+            translation += translatedWord ? translatedWord + ' ' : '<span class="untranslated">' + words[i] + '</span> ';
         }
     }
 
