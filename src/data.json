@@ -38,7 +38,8 @@
         "dimana": "Kenpi",
         "kapan": "Neidan",
         "mengapa": "Sek Inu",
-        "siapa": "Ahe"
+        "siapa": "Ahe",
+        "dari" : "cen"
     },
     "pronouns": {
         "saya": "Ake",
@@ -92,7 +93,8 @@
         "tanah air": "Tane Sungai",
         "tari lagu": "Nganjet Juget",
         "telinga tuli": "Telinge Mandeng",
-        "turun naik": "Kenda Kembau"
+        "turun naik": "Kenda Kembau",
+        "cita cita": "ake uba ketai"
     },
     "colors": {
         "abu": "Maveu",
