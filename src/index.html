@@ -1,70 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kamus Bahasa Dayak Kenyah</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Translator Bahasa Dayak Kenyah Lepo Tau, Lepo Bem, dan Lepo Jalan menggunakan desain modern dan minimalis. Dibuat oleh KOU.">
+    <meta name="keywords" content="Translator, Dayak Kenyah, Bahasa Indonesia, Bootstrap, KOU">
+    <meta name="author" content="KOU">
+    <title>Translator Bahasa Dayak Kenyah</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-color: #f8f9fa;
+            overflow-x: hidden;
+        }
+        .navbar {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-custom:hover {
+            background-color: #0056b3;
+        }
+        .copy-icon {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            cursor: pointer;
+            color: #6c757d;
+            transition: color 0.3s ease;
+        }
+        .copy-icon:hover {
+            color: #007bff;
+        }
+        footer {
+            background-color: #f1f1f1;
+            padding: 20px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .dictionary-list {
+            columns: 3;
+            -webkit-columns: 3;
+            -moz-columns: 3;
+        }
+    </style>
 </head>
 <body>
-  <nav>
-    <div class="container">
-      <div class="navbar">
-        <a href="#" class="logo">Kamus Dayak Kenyah</a>
-        <ul class="menu">
-          <li><a href="index.html">Beranda</a></li>
-          <li><a href="kamuskosakata.html">Kamus Kosakata</a></li>
-          <li><a href="https://github.com/fk0u/Kamus-Dayak-Kenyah">Tentang</a></li>
-        </ul>
-        <button id="menuBtn" class="menu-btn">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-      </div>
-    </div>
-    <div id="mobileMenu" class="mobile-menu">
-      <ul>
-        <li><a href="index.html">Beranda</a></li>
-        <li><a href="kamuskosakata.html">Kamus Kosakata</a></li>
-        <li><a href="https://github.com/fk0u/Kamus-Dayak-Kenyah">Tentang</a></li>
-      </ul>
-    </div>
-  </nav>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold text-primary" href="#">Translator Dayak Kenyah</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#translator">Translator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#dictionary">Kamus A-Z</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">Tentang</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-  <div class="container mt-10">
-    <h1>Kamus Bahasa Dayak Kenyah</h1>
+    <!-- Main Content -->
+    <div class="container my-5">
+        <!-- Translator Section -->
+        <section id="translator" class="mb-5">
+            <div class="card p-4">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Terjemahkan Bahasa</h2>
+                    <div class="mb-3">
+                        <label for="inputText" class="form-label">Masukkan kata atau kalimat dalam Bahasa Indonesia:</label>
+                        <textarea id="inputText" class="form-control" rows="4" placeholder="Masukkan teks di sini..."></textarea>
+                    </div>
+                    <div class="d-flex justify-content-center gap-3">
+                        <button id="translateButton" class="btn btn-custom" disabled>Terjemahkan</button>
+                        <button id="clearButton" class="btn btn-outline-danger">Bersihkan</button>
+                    </div>
+                    <div class="position-relative mt-4">
+                        <textarea id="result" class="form-control" rows="4" placeholder="Hasil terjemahan..." readonly></textarea>
+                        <i id="copyButton" class="fas fa-copy copy-icon"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <div class="mb-4">
-      <label for="direction">Pilih Arah Penerjemahan:</label>
-      <select id="direction">
-        <option value="id-to-dk">Indonesia ke Dayak Kenyah</option>
-        <option value="dk-to-id">Dayak Kenyah ke Indonesia</option>
-      </select>
-    </div>
-    <div class="mb-4">
-      <label for="inputText">Masukkan Kalimat atau Kata:</label>
-      <textarea id="inputText" rows="4"></textarea>
-    </div>
-    <button id="translateBtn">Terjemahkan</button>
+        <!-- Dictionary Section -->
+        <section id="dictionary" class="mb-5">
+            <div class="card p-4">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Kamus A-Z</h2>
+                    <div id="dictionaryContent" class="dictionary-list">
+                        <!-- The dictionary entries will be dynamically populated here -->
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <div class="mt-5">
-      <h2>Hasil Terjemahan:</h2>
-      <p id="result"></p>
+        <!-- About Section -->
+        <section id="about">
+            <div class="card p-4">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Tentang</h2>
+                    <p>Aplikasi ini dibuat oleh KOU untuk menerjemahkan Bahasa Dayak Kenyah ke Bahasa Indonesia dan sebaliknya. Kami berharap aplikasi ini dapat membantu melestarikan bahasa Dayak Kenyah dan memudahkan komunikasi antara generasi. Aplikasi ini dirancang dengan pendekatan yang intuitif agar mudah digunakan oleh semua orang, baik untuk belajar bahasa maupun sekedar mengetahui arti dari kata-kata.</p>
+                    <p><strong>Special Thanks:</strong><br>
+                        - Bu Septiana Lenjau, andi1988233, dan Muhammad Kevin Reynaldhi atas kontribusi kosakata mereka dalam penyusunan kamus ini.
+                    </p>
+                </div>
+            </div>
+        </section>
     </div>
-  </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const menuBtn = document.getElementById('menuBtn');
-      const mobileMenu = document.getElementById('mobileMenu');
-    
-      menuBtn.addEventListener('click', function() {
-        menuBtn.classList.toggle('active');
-        mobileMenu.classList.toggle('active');
-      });
-    });    
-  </script>
-  <script src="script.js"></script>
+    <!-- Footer -->
+    <footer class="text-center">
+        <p>Dibuat oleh KOU &copy; <span id="footerYear"></span></p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Dynamic footer year update
+            document.getElementById('footerYear').innerText = new Date().getFullYear();
+            
+            let kamus = {};
+
+            // Load the JSON data containing Dayak Kenyah translations
+            fetch('kamus_dayak_kenyah.json')
+                .then(response => response.json())
+                .then(data => {
+                    kamus = data;
+                    // Enable the translate button once the dictionary is loaded
+                    document.getElementById('translateButton').disabled = false;
+                    // Populate the dictionary section
+                    populateDictionary(kamus);
+                })
+                .catch(error => console.error('Error loading the dictionary:', error));
+
+            document.getElementById('translateButton').addEventListener('click', function () {
+                const inputText = document.getElementById('inputText').value.toLowerCase().trim();
+                let translatedText = '';
+
+                // Split sentences into words and handle punctuation
+                const sentences = inputText.split(/[.!?]/);
+                sentences.forEach((sentence, index) => {
+                    const words = sentence.trim().split(/\s+/);
+                    let translatedSentence = words.map(word => {
+                        // Remove punctuation from word
+                        let cleanWord = word.replace(/[.,!?]/g, '');
+                        let translatedWord = kamus[cleanWord] ? kamus[cleanWord] : cleanWord;
+                        return translatedWord;
+                    }).join(' ');
+                    translatedText += translatedSentence;
+                    if (index < sentences.length - 1) {
+                        translatedText += '. ';
+                    }
+                });
+
+                document.getElementById('result').value = translatedText;
+            });
+
+            // Copy translation to clipboard
+            document.getElementById('copyButton').addEventListener('click', function () {
+                const resultText = document.getElementById('result').value;
+                if (resultText) {
+                    navigator.clipboard.writeText(resultText)
+                        .then(() => {
+                            alert('Terjemahan telah disalin ke clipboard');
+                        })
+                        .catch(err => console.error('Failed to copy text: ', err));
+                }
+            });
+
+            // Clear input and output fields
+            document.getElementById('clearButton').addEventListener('click', function () {
+                document.getElementById('inputText').value = '';
+                document.getElementById('result').value = '';
+            });
+
+            // Populate dictionary section
+            function populateDictionary(kamus) {
+                const dictionaryContent = document.getElementById('dictionaryContent');
+                let dictionaryHTML = '';
+                const sortedKeys = Object.keys(kamus).sort();
+                sortedKeys.forEach(word => {
+                    dictionaryHTML += `<p><strong>${word}:</strong> ${kamus[word]}</p>`;
+                });
+                dictionaryContent.innerHTML = dictionaryHTML;
+            }
+        });
+    </script>
 </body>
 </html>
