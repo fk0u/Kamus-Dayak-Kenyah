@@ -1,4 +1,4 @@
-# Kamus Bahasa Daerah Dayak Kenyah
+# Website Translator Kamus Bahasa Dayak Kenyah
 
 Selamat datang di repositori Kamus Bahasa Daerah Dayak Kenyah! Proyek ini bertujuan untuk menyediakan kamus digital yang memudahkan pengguna dalam mempelajari, melestarikan, dan mencari kosakata bahasa Dayak Kenyah.
 
